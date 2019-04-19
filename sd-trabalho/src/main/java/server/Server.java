@@ -138,6 +138,8 @@ public class Server implements Runnable {
 				socket.close();
 
 				break;
+			default:
+				break;
 			}
 
 		} catch (IOException | ClassNotFoundException | NullPointerException | ClassCastException e) {

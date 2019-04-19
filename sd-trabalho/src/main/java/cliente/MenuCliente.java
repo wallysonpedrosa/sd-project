@@ -14,6 +14,8 @@ import util.Tipo;
 
 public class MenuCliente implements Runnable{
 
+	private static Thread imprimeTela = new Thread (new OperacoesCliente());
+	
 	public static void main(String[] args) {
 		Thread t = new Thread(new MenuCliente());
 		t.start();
@@ -33,8 +35,7 @@ public class MenuCliente implements Runnable{
 			Scanner scanner = new Scanner(System.in);
 			String tipo;
 			Operacao operacao = new Operacao();
-			Operacao reply;
-
+			
 			while (continua) {
 				System.out.println("\nEscolha a Operacao:");
 				tipo = scanner.next();
@@ -51,18 +52,13 @@ public class MenuCliente implements Runnable{
 					operacao.setChave(BigInteger.valueOf(scanner.nextInt()));
 						System.out.println("Digite o valor:");
 					operacao.setValor(scanner.next());
-
-					Thread op = new Thread(new OperacoesCliente());
-					op.start();
-					op.join();
 					
 					output.writeObject(operacao);
 					output.flush();
 					
-					reply = (Operacao) input.readObject();
-					System.out.println("\nResposta do servidor:");
-
-					System.out.println("Operacao: " + reply.getTipo() + "\nStatus: " + reply.getStatus() + "\nMensagem: " + reply.getMensagem());
+					imprimeTela = new Thread (new OperacoesCliente((Operacao) input.readObject()));
+					imprimeTela.start();
+					imprimeTela.join();
 					break;
 
 				case "READ":
@@ -78,11 +74,9 @@ public class MenuCliente implements Runnable{
 					output.writeObject(operacao);
 					output.flush();
 
-					reply = (Operacao) input.readObject();
-					System.out.println("\nResposta do Servidor:");
-
-					System.out.println("Operacao: " + reply.getTipo() + "\nStatus: " + reply.getStatus() + "\nMensagem: " + reply.getMensagem());
-					
+					imprimeTela = new Thread (new OperacoesCliente((Operacao) input.readObject()));
+					imprimeTela.start();
+					imprimeTela.join();
 					break;
 
 				case "UPDATE":
@@ -100,10 +94,9 @@ public class MenuCliente implements Runnable{
 					output.writeObject(operacao);
 					output.flush();
 					
-					reply = (Operacao) input.readObject();
-					System.out.println("\nResposta do servidor:");
-
-					System.out.println("Operacao: " + reply.getTipo() + "\nStatus: " + reply.getStatus() + "\nMensagem: " + reply.getMensagem());
+					imprimeTela = new Thread (new OperacoesCliente((Operacao) input.readObject()));
+					imprimeTela.start();
+					imprimeTela.join();
 					break;
 
 				case "DELETE":
@@ -119,10 +112,9 @@ public class MenuCliente implements Runnable{
 					output.writeObject(operacao);
 					output.flush();
 					
-					reply = (Operacao) input.readObject();
-					System.out.println("\nResposta do servidor:");
-
-					System.out.println("Operacao: " + reply.getTipo() + "\nStatus: " + reply.getStatus() + "\nMensagem: " + reply.getMensagem());
+					imprimeTela = new Thread (new OperacoesCliente((Operacao) input.readObject()));
+					imprimeTela.start();
+					imprimeTela.join();
 					break;
 
 				case "SAIR":
@@ -135,47 +127,50 @@ public class MenuCliente implements Runnable{
 					output.writeObject(operacao);
 					output.flush();
 
-					reply = (Operacao) input.readObject();
-					System.out.println("\nResposta do servidor:");
-					System.out.println("Operacao: " + reply.getTipo() + "\nStatus: " + reply.getStatus() + "\nMensagem: " + reply.getMensagem());
+					imprimeTela = new Thread (new OperacoesCliente((Operacao) input.readObject()));
+					imprimeTela.start();
+					imprimeTela.join();
 					
-					scanner.close();
-					output.close();
-					input.close();
-					socket.close();
+					fechaMenuCliente(scanner,output,output,input,socket);
 					continua = false;
 					break;
 
 				case "AJUDA":
 
-					System.out.println("\nCREATE - Inserir no Banco \nDeve ser Informado a chave e o valor do elemento");
-					System.out.println("\nREAD - Ler uma instancia \nDeve ser Informada a chave do elemento");
-					System.out.println("\nUPDATE - Atualizar uma Instancia do Banco \nDeve ser informado chave e valor");
-					System.out.println("\nDELETE - Apagar uma Instancia do Banco \nDeve ser informado a chave do elemento");
-					System.out.println("\nSAIR - Desconectar do Banco");
+					output = new ObjectOutputStream(socket.getOutputStream());
+					input = new ObjectInputStream(socket.getInputStream());
 					
-					break;
+					operacao.setTipo(Tipo.AJUDA);
 
+					output.writeObject(operacao);
+					output.flush();
+					
+					imprimeTela = new Thread (new OperacoesCliente((Operacao) input.readObject()));
+					imprimeTela.start();
+					imprimeTela.join();
+					break;
 				default:
 					System.out.println("\nOperacao Invalida - Digite AJUDA para mostrar todas as operacoes");
 				}
-
 			}
-
 		} catch (
-
 		UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private void fechaMenuCliente(Scanner scanner, ObjectOutputStream output,
+													ObjectOutputStream output2,
+													ObjectInputStream input, Socket socket) throws IOException {
+		scanner.close();
+		output.close();
+		input.close();
+		socket.close();
 	}
 }
