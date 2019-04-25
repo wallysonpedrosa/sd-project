@@ -15,27 +15,27 @@ public class Banco {
 		banco.put(new BigInteger("2"), "B");
 	}
 	
-	public  synchronized void setValor(BigInteger chave, String valor) {
+	public void setValor(BigInteger chave, String valor) {
 		banco.put(chave,valor);
 	}
 	
-	public synchronized String getValor(BigInteger chave) {
+	public String getValor(BigInteger chave) {
 		return banco.get(chave);
 	}
 	
-	public synchronized  void deletaValor(BigInteger chave) {
+	public void deletaValor(BigInteger chave) {
 		if(banco.containsKey(chave)) {
 			banco.remove(chave);
 		}
 	}
 	
-	public synchronized  void atualizaValor(BigInteger chave, String valor) {
+	public void atualizaValor(BigInteger chave, String valor) {
 		if(banco.containsKey(chave)) {
 			banco.replace(chave, valor);
 		}
 	}
 	
-	public synchronized boolean existeElemento(BigInteger chave){
+	public boolean existeElemento(BigInteger chave){
 		
 		if(banco.containsKey(chave)){
 			return true;
