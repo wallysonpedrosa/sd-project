@@ -1,22 +1,17 @@
 package server;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigInteger;
-import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 
-import util.Banco;
 import util.Operacao;
 
 public class InsereLog implements Runnable {
 
 	private String arquivo;
 	private ArrayBlockingQueue<Operacao> filaLogs;
-	private Map<BigInteger, String> banco;
-	private Banco elemento;
-
 	public InsereLog(String arquivo, ArrayBlockingQueue<Operacao> filaLogs) {
 		this.arquivo = arquivo;
 		this.filaLogs = filaLogs;
@@ -27,38 +22,45 @@ public class InsereLog implements Runnable {
 	public void run() {
 		
 	
-		banco = null;
-		
 		while (true) {
 
 			try {
-				
-				Operacao operacao = filaLogs.take();  //Metodo take é bloqueante 
+				String valor = new String();
+				Operacao operacao = filaLogs.take();  //Metodo take é bloqueante
 				System.out.println("Salvado as operacoes no arquivo " + arquivo);
-				System.out.println("Operacao: " + operacao.getTipo());
-				System.out.println("Chave: " + operacao.getChave());
-				System.out.println("Valor: " + operacao.getValor());
 				
-				FileWriter arq = new FileWriter("C:\\Teste\\arquivo.txt");
-				PrintWriter printWriter = new PrintWriter(arq);
-		    
-			    elemento = null;
-			    String valor = new String();
-			    
-			    for (BigInteger chave : banco.keySet()) {
-			    	valor = (chave + " : " + elemento.getValor(chave));
-			    	printWriter.println(valor);
+				switch (operacao.getTipo()) {
+				case CREATE :
+					valor = operacao.getTipo() + "," + operacao.getChave() + "," + operacao.getValor();
+					break;
+				
+				case DELETE:
+					valor = operacao.getTipo() + "," + operacao.getChave();
+					break;
+				
+				case UPDATE:
+					valor = operacao.getTipo() + "," + operacao.getChave() + "," + operacao.getValor();
+					break;
+				default:
+					break;
 				}
-			    
-			    System.out.println(valor);
-			    
-			    printWriter.close();
-			    arq.close();
-				
+				//System.out.println("Operacao: " + operacao.getTipo());
+				//System.out.println("Chave: " + operacao.getChave());
+				//System.out.println("Valor: " + operacao.getValor());
+
+				File log = new File(arquivo);
+				if(!log.exists()) {
+					log.createNewFile();				
+				}
+				FileWriter fw = new FileWriter( arquivo, true );
+				PrintWriter printWriter = new PrintWriter(fw);
+				printWriter.println(valor);
+				printWriter.close();
+				fw.close();	
+
 			} catch (InterruptedException e) {
 				return;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

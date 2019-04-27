@@ -3,7 +3,6 @@ package cliente;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.math.BigInteger;
 import java.net.Socket;
 
 import util.Operacao;
@@ -55,7 +54,6 @@ public class Cliente {
 			socket.close();
 			
 		} catch (IOException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
