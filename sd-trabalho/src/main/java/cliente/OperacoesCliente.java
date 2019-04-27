@@ -41,14 +41,6 @@ public class OperacoesCliente implements Runnable{
 			System.out.println("Operacao: " + this.operacao.getTipo() + "\nStatus: " + this.operacao.getStatus() + "\nMensagem: " + this.operacao.getMensagem());
 			
 		}
-		if(Tipo.AJUDA.equals(this.operacao.getTipo())) {
-
-			System.out.println("\nCREATE - Inserir no Banco \nDeve ser Informado a chave e o valor do elemento");
-			System.out.println("\nREAD - Ler uma instancia \nDeve ser Informada a chave do elemento");
-			System.out.println("\nUPDATE - Atualizar uma Instancia do Banco \nDeve ser informado chave e valor");
-			System.out.println("\nDELETE - Apagar uma Instancia do Banco \nDeve ser informado a chave do elemento");
-			System.out.println("\nSAIR - Desconectar do Banco");
-		}
 	}
 	
 }

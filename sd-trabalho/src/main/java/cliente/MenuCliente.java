@@ -137,17 +137,12 @@ public class MenuCliente implements Runnable{
 
 				case "AJUDA":
 
-					output = new ObjectOutputStream(socket.getOutputStream());
-					input = new ObjectInputStream(socket.getInputStream());
+					System.out.println("\nCREATE - Inserir no Banco \nDeve ser Informado a chave e o valor do elemento");
+					System.out.println("\nREAD - Ler uma instancia \nDeve ser Informada a chave do elemento");
+					System.out.println("\nUPDATE - Atualizar uma Instancia do Banco \nDeve ser informado chave e valor");
+					System.out.println("\nDELETE - Apagar uma Instancia do Banco \nDeve ser informado a chave do elemento");
+					System.out.println("\nSAIR - Desconectar do Banco");
 					
-					operacao.setTipo(Tipo.AJUDA);
-
-					output.writeObject(operacao);
-					output.flush();
-					
-					imprimeTela = new Thread (new OperacoesCliente((Operacao) input.readObject()));
-					imprimeTela.start();
-					imprimeTela.join();
 					break;
 				default:
 					System.out.println("\nOperacao Invalida - Digite AJUDA para mostrar todas as operacoes");
