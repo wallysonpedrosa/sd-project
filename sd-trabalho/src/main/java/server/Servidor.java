@@ -1,8 +1,12 @@
 package server;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -64,14 +68,26 @@ public class Servidor {
 	}
 	
 	public void povoaBanco(String arquivo) {
-		
 		System.out.println("Povoando o banco com o " + arquivo);
+		 Scanner scanner;
+		try {
+			scanner = new Scanner(new FileReader("C:\\Teste\\" + arquivo));
+			while (scanner.hasNextLine()) {
+	            String[] columns = scanner.nextLine().split(":");
+	            banco.setValor(new BigInteger(columns[0]), columns[1]);
+	        }
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void parar() throws IOException {
 		estaRodando.set(false);
 		threadPool.shutdown();
 		servidorSocket.close();
+		
+		
 	}
 
 	public static void main(String[] args) throws IOException {
