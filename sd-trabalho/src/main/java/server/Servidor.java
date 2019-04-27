@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -67,11 +70,12 @@ public class Servidor {
 		}
 	}
 	
-	public void povoaBanco(String arquivo) {
+	public void povoaBanco(String arquivo){
 		System.out.println("Povoando o banco com o " + arquivo);
-		 Scanner scanner;
+		
+		/*Scanner scanner;
 		try {
-			scanner = new Scanner(new FileReader("C:\\Teste\\" + arquivo));
+			scanner = new Scanner(new FileReader(arquivo));
 			while (scanner.hasNextLine()) {
 	            String[] columns = scanner.nextLine().split(":");
 	            banco.setValor(new BigInteger(columns[0]), columns[1]);
@@ -80,6 +84,23 @@ public class Servidor {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		/*try {
+			 List<String> linhas = Files.readAllLines(Paths.get(arquivo));
+			 for (String linha : linhas) {
+			        String[] registro = linha.split(",");
+			        if(registro[0].equals("DELETE")) {
+			        	break;
+			        } else {
+			        	banco.setValor(new BigInteger(registro[1]), registro[2]);
+			        }
+			 }
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}*/
 	}
 
 	public void parar() throws IOException {
