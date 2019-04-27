@@ -20,6 +20,7 @@ public class Servidor {
 	private ArrayBlockingQueue<Operacao> filaComandos;
 	private ArrayBlockingQueue<Operacao> filaBanco;
 	private ArrayBlockingQueue<Operacao> filaLogs;
+	private String arquivo;
 
 	public Servidor() throws IOException {
 		System.out.println("----- Iniciando Servidor -----");
@@ -29,6 +30,8 @@ public class Servidor {
 		filaComandos = new ArrayBlockingQueue<>(4);
 		filaBanco = new ArrayBlockingQueue<>(4);
 		filaLogs = new ArrayBlockingQueue<>(4);
+		arquivo = "arquivo.txt";
+		povoaBanco(arquivo);
 		
 	}
 
@@ -51,13 +54,18 @@ public class Servidor {
 				InsereBanco insereBanco = new InsereBanco(banco, filaBanco);
 				threadPool.execute(insereBanco);
 				
-				InsereLog insereLog = new InsereLog("arquivo.txt", filaLogs);
+				InsereLog insereLog = new InsereLog(arquivo, filaLogs);
 				threadPool.execute(insereLog);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void povoaBanco(String arquivo) {
+		
+		System.out.println("Povoando o banco com o " + arquivo);
 	}
 
 	public void parar() throws IOException {

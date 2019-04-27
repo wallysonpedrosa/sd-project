@@ -11,8 +11,6 @@ public class Banco {
 	public Banco(){
 		
 		banco = new HashMap<BigInteger, String>();
-		banco.put(new BigInteger("1"), "A");
-		banco.put(new BigInteger("2"), "B");
 	}
 	
 	public void setValor(BigInteger chave, String valor) {
