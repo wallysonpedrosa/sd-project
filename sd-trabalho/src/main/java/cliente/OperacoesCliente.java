@@ -26,6 +26,11 @@ public class OperacoesCliente implements Runnable{
 			System.out.println("Operacao: " +  this.operacao.getTipo() + "\nStatus: " +  this.operacao.getStatus() + "\nMensagem: " +  this.operacao.getMensagem());
 			
 		}
+		if(Tipo.READVALUES.equals(this.operacao.getTipo())) {
+			System.out.println("\nResposta do Servidor:");
+			System.out.println("Operacao: " +  this.operacao.getValores() + "\nStatus: " +  this.operacao.getStatus() + "\nMensagem: " +  this.operacao.getMensagem());
+			
+		}
 		if(Tipo.UPDATE.equals(this.operacao.getTipo())) {
 			System.out.println("\nResposta do servidor:");
 			System.out.println("Operacao: " + this.operacao.getTipo() + "\nStatus: " + this.operacao.getStatus() + "\nMensagem: " + this.operacao.getMensagem());
