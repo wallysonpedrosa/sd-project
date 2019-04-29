@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="1" failures="0" name="trabalho_sd.sd.AppTest" time="0.005" errors="0" skipped="0">
+<testsuite tests="1" failures="0" name="trabalho_sd.sd.AppTest" time="0.004" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="12.0.1+12"/>
@@ -26,7 +26,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="user.variant" value=""/>
     <property name="os.name" value="Windows 10"/>
-    <property name="classworlds.conf" value="C:\workspace\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf2341278580919429021.tmp"/>
+    <property name="classworlds.conf" value="C:\workspace\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf1408582883386642411.tmp"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
     <property name="java.library.path" value="C:\Program Files\Java\jdk-12.0.1\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:/Program Files/Java/jdk1.8.0_162/jre/bin/server;C:/Program Files/Java/jdk1.8.0_162/jre/bin;C:/Program Files/Java/jdk1.8.0_162/jre/lib/amd64;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\Program Files\Java\jdk1.8.0_162\bin;C:\WINDOWS\System32\OpenSSH\;C:\Users\Deise Raiane\AppData\Local\Microsoft\WindowsApps;;C:\Users\Deise Raiane\Desktop;;."/>
     <property name="jdk.debug" value="release"/>
@@ -59,5 +59,5 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="trabalho_sd.sd.AppTest" name="testApp" time="0.005"/>
+  <testcase classname="trabalho_sd.sd.AppTest" name="testApp" time="0.004"/>
 </testsuite>
