@@ -12,10 +12,10 @@ import util.Operacao;
 import util.Status;
 import util.Tipo;
 
-public class MenuCliente implements Runnable{
+public class MenuCliente implements Runnable {
 
-	private static Thread imprimeTela = new Thread (new OperacoesCliente());
-	
+	private static Thread imprimeTela = new Thread(new OperacoesCliente());
+
 	public static void main(String[] args) {
 		Thread t = new Thread(new MenuCliente());
 		t.start();
@@ -29,52 +29,52 @@ public class MenuCliente implements Runnable{
 			socket = new Socket("localhost", 9876);
 			ObjectOutputStream output;
 			ObjectInputStream input;
-			
+
 			System.out.println("---------- Conexao Estabelecida com Sucesso -----------");
 			boolean continua = true;
 			Scanner scanner = new Scanner(System.in);
 			String tipo;
 			Operacao operacao = new Operacao();
-			
+
 			while (continua) {
 				System.out.println("\nEscolha a Operacao:");
 				tipo = scanner.next();
 
 				switch (tipo) {
 				case "CREATE":
-					
+
 					output = new ObjectOutputStream(socket.getOutputStream());
 					input = new ObjectInputStream(socket.getInputStream());
-					
+
 					operacao.setTipo(Tipo.CREATE);
 					operacao.setStatus(Status.SOLICITACAO);
-						System.out.println("Digite a Chave:");
+					System.out.println("Digite a Chave:");
 					operacao.setChave(BigInteger.valueOf(scanner.nextInt()));
-						System.out.println("Digite o valor:");
+					System.out.println("Digite o valor:");
 					operacao.setValor(scanner.next());
-					
+
 					output.writeObject(operacao);
 					output.flush();
-					
-					imprimeTela = new Thread (new OperacoesCliente((Operacao) input.readObject()));
+
+					imprimeTela = new Thread(new OperacoesCliente((Operacao) input.readObject()));
 					imprimeTela.start();
 					imprimeTela.join();
 					break;
 
 				case "READ":
-					
+
 					output = new ObjectOutputStream(socket.getOutputStream());
 					input = new ObjectInputStream(socket.getInputStream());
-					
+
 					operacao.setTipo(Tipo.READ);
 					operacao.setStatus(Status.SOLICITACAO);
 					System.out.println("Digite a Chave:");
 					operacao.setChave(BigInteger.valueOf(scanner.nextInt()));
-					
+
 					output.writeObject(operacao);
 					output.flush();
 
-					imprimeTela = new Thread (new OperacoesCliente((Operacao) input.readObject()));
+					imprimeTela = new Thread(new OperacoesCliente((Operacao) input.readObject()));
 					imprimeTela.start();
 					imprimeTela.join();
 					break;
@@ -83,7 +83,7 @@ public class MenuCliente implements Runnable{
 
 					output = new ObjectOutputStream(socket.getOutputStream());
 					input = new ObjectInputStream(socket.getInputStream());
-					
+
 					operacao.setTipo(Tipo.UPDATE);
 					operacao.setStatus(Status.SOLICITACAO);
 					System.out.println("Digite a Chave:");
@@ -93,8 +93,8 @@ public class MenuCliente implements Runnable{
 
 					output.writeObject(operacao);
 					output.flush();
-					
-					imprimeTela = new Thread (new OperacoesCliente((Operacao) input.readObject()));
+
+					imprimeTela = new Thread(new OperacoesCliente((Operacao) input.readObject()));
 					imprimeTela.start();
 					imprimeTela.join();
 					break;
@@ -103,53 +103,55 @@ public class MenuCliente implements Runnable{
 
 					output = new ObjectOutputStream(socket.getOutputStream());
 					input = new ObjectInputStream(socket.getInputStream());
-					
+
 					operacao.setTipo(Tipo.DELETE);
 					operacao.setStatus(Status.SOLICITACAO);
 					System.out.println("Digite a Chave:");
 					operacao.setChave(BigInteger.valueOf(scanner.nextInt()));
-					
+
 					output.writeObject(operacao);
 					output.flush();
-					
-					imprimeTela = new Thread (new OperacoesCliente((Operacao) input.readObject()));
+
+					imprimeTela = new Thread(new OperacoesCliente((Operacao) input.readObject()));
 					imprimeTela.start();
 					imprimeTela.join();
 					break;
 
 				case "SAIR":
-					
+
 					output = new ObjectOutputStream(socket.getOutputStream());
 					input = new ObjectInputStream(socket.getInputStream());
-					
+
 					operacao.setTipo(Tipo.SAIR);
 
 					output.writeObject(operacao);
 					output.flush();
 
-					imprimeTela = new Thread (new OperacoesCliente((Operacao) input.readObject()));
+					imprimeTela = new Thread(new OperacoesCliente((Operacao) input.readObject()));
 					imprimeTela.start();
 					imprimeTela.join();
-					
-					fechaMenuCliente(scanner,output,output,input,socket);
+
+					fechaMenuCliente(scanner, output, output, input, socket);
 					continua = false;
 					break;
 
 				case "AJUDA":
 
-					System.out.println("\nCREATE - Inserir no Banco \nDeve ser Informado a chave e o valor do elemento");
+					System.out
+							.println("\nCREATE - Inserir no Banco \nDeve ser Informado a chave e o valor do elemento");
 					System.out.println("\nREAD - Ler uma instancia \nDeve ser Informada a chave do elemento");
-					System.out.println("\nUPDATE - Atualizar uma Instancia do Banco \nDeve ser informado chave e valor");
-					System.out.println("\nDELETE - Apagar uma Instancia do Banco \nDeve ser informado a chave do elemento");
+					System.out
+							.println("\nUPDATE - Atualizar uma Instancia do Banco \nDeve ser informado chave e valor");
+					System.out.println(
+							"\nDELETE - Apagar uma Instancia do Banco \nDeve ser informado a chave do elemento");
 					System.out.println("\nSAIR - Desconectar do Banco");
-					
+
 					break;
 				default:
 					System.out.println("\nOperacao Invalida - Digite AJUDA para mostrar todas as operacoes");
 				}
 			}
-		} catch (
-		UnknownHostException e) {
+		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -160,9 +162,8 @@ public class MenuCliente implements Runnable{
 		}
 	}
 
-	private void fechaMenuCliente(Scanner scanner, ObjectOutputStream output,
-													ObjectOutputStream output2,
-													ObjectInputStream input, Socket socket) throws IOException {
+	private void fechaMenuCliente(Scanner scanner, ObjectOutputStream output, ObjectOutputStream output2,
+			ObjectInputStream input, Socket socket) throws IOException {
 		scanner.close();
 		output.close();
 		input.close();

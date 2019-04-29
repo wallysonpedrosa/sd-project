@@ -5,7 +5,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ExecutorService;
 
 import util.Banco;
 import util.Operacao;
@@ -16,14 +15,12 @@ public class TarefasServer implements Runnable {
 
 	private Servidor servidor;
 	private Socket socket;
-	private ExecutorService threadPool;
 	private Banco banco;
 	private ArrayBlockingQueue<Operacao> filaComandos;
 
-	public TarefasServer(Servidor servidor, Socket socket, ExecutorService threadPool, ArrayBlockingQueue<Operacao> filaComandos, Banco banco) {
+	public TarefasServer(Servidor servidor, Socket socket, ArrayBlockingQueue<Operacao> filaComandos, Banco banco) {
 		this.servidor = servidor;
 		this.socket = socket;
-		this.threadPool = threadPool;
 		this.banco = banco;
 		this.filaComandos = filaComandos;
 	}
@@ -54,11 +51,11 @@ public class TarefasServer implements Runnable {
 						reply.setMensagem("Informe Chave e Valor para inserir no banco");
 
 					} else {
-						//banco.setValor(operacao.getChave(), operacao.getValor());
+						// banco.setValor(operacao.getChave(), operacao.getValor());
 						filaComandos.put(operacao);
 						reply.setStatus(Status.OK);
 						reply.setMensagem("Elemento inserido com sucesso");
-						
+
 					}
 					output.writeObject(reply);
 					output.flush();
@@ -85,7 +82,7 @@ public class TarefasServer implements Runnable {
 
 					reply.setTipo(Tipo.UPDATE);
 					if (banco.existeElemento(operacao.getChave())) {
-						//banco.atualizaValor(operacao.getChave(), operacao.getValor());
+						// banco.atualizaValor(operacao.getChave(), operacao.getValor());
 						filaComandos.put(operacao);
 						reply.setStatus(Status.OK);
 						reply.setMensagem("Elemento Atualizado com Sucesso");
@@ -108,7 +105,7 @@ public class TarefasServer implements Runnable {
 
 					reply.setTipo(Tipo.DELETE);
 					if (banco.existeElemento(operacao.getChave())) {
-						//banco.deletaValor(operacao.getChave());
+						// banco.deletaValor(operacao.getChave());
 						filaComandos.put(operacao);
 						reply.setStatus(Status.OK);
 						reply.setMensagem("Elemento Deletado com Sucesso");
@@ -147,9 +144,10 @@ public class TarefasServer implements Runnable {
 				}
 			}
 
-		} catch (IOException | ClassNotFoundException | NullPointerException | ClassCastException | InterruptedException e ) {
+		} catch (IOException | ClassNotFoundException | NullPointerException | ClassCastException
+				| InterruptedException e) {
 			System.out.println("Erro - Finalizando conexao com cliente");
 			return;
-		} 
+		}
 	}
 }
