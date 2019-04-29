@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import util.Banco;
@@ -72,6 +73,27 @@ public class TarefasServer implements Runnable {
 
 						reply.setStatus(Status.ERRO);
 						reply.setMensagem("Nao existe nenhum elemento com a chave informada");
+					}
+
+					output.writeObject(reply);
+					output.flush();
+					break;
+					
+				case READVALUES:
+
+					reply.setTipo(Tipo.READVALUES);
+					List<String> elementos = banco.getElementos();
+					
+					if (elementos==null) {
+						reply.setStatus(Status.ERRO);
+						reply.setMensagem("Nao existem elementos no banco.");						
+					} else {
+						reply.setStatus(Status.OK);
+						String elemento = new String();
+						for(int i=0; i < elementos.size(); i++){
+							elemento += elementos.get(i) + "\n";
+						}
+						reply.setMensagem(elemento);
 					}
 
 					output.writeObject(reply);

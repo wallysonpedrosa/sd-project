@@ -99,6 +99,7 @@ public class Servidor {
 					break;
 				}
 			}
+
 		} catch (IOException e) {
 			System.out.println("Arquivo não encontrado!");
 		}

@@ -1,19 +1,18 @@
 package util;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class Banco {
+public class Log {
 
 	Map<BigInteger, String> banco;
-	private Banco elemento;
 	
-	public Banco(){
+	public Log(){
 		
 		banco = new HashMap<BigInteger, String>();
+		banco.put(new BigInteger("1"), "A");
+		banco.put(new BigInteger("2"), "B");
 	}
 	
 	public void setValor(BigInteger chave, String valor) {
@@ -22,21 +21,6 @@ public class Banco {
 	
 	public String getValor(BigInteger chave) {
 		return banco.get(chave);
-	}
-	
-	public List<String> getElementos() {
-		
-		List<String> lista = new ArrayList<String>();
-		elemento = null;
-		
-		for (BigInteger chave : banco.keySet()) {
-            
-			//Capturamos o valor a partir da chave
-            String valor = elemento.getValor(chave);
-            lista.add("Chave: " + chave + ", valor: " + valor);
-		}
-		
-		return lista;
 	}
 	
 	public void deletaValor(BigInteger chave) {

@@ -11,7 +11,7 @@ public class Operacao implements Serializable{
 	String mensagem;
 	private BigInteger chave;
 	private String valor;
-	
+	private String elemento;
 	
 	public void setMensagem(String mensagem) {
 		this.mensagem = mensagem;
@@ -37,11 +37,12 @@ public class Operacao implements Serializable{
 	public void setValor(String valor) {
 		this.valor = valor;
 	}
-	
+	public String getValores() {
+		return elemento;
+	}
 	public Status getStatus() {
 		return status;
 	}
-	
 	public void setStatus(Status status) {
 		this.status = status;
 	}

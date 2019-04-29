@@ -78,6 +78,22 @@ public class MenuCliente implements Runnable {
 					imprimeTela.start();
 					imprimeTela.join();
 					break;
+					
+				case "READVALUES":
+					
+					output = new ObjectOutputStream(socket.getOutputStream());
+					input = new ObjectInputStream(socket.getInputStream());
+					
+					operacao.setTipo(Tipo.READVALUES);
+					operacao.setStatus(Status.SOLICITACAO);
+					operacao.getValores();
+					output.writeObject(operacao);
+					output.flush();
+
+					imprimeTela = new Thread (new OperacoesCliente((Operacao) input.readObject()));
+					imprimeTela.start();
+					imprimeTela.join();
+					break;
 
 				case "UPDATE":
 
